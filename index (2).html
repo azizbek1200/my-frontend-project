@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProcureEase - Xaridlar Boshqaruvi</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="user-info" id="user-info">
+        <div class="user-avatar"></div>
+        <div class="user-details">
+          <h3 id="user-name"></h3>
+          <p id="user-role"></p>
+        </div>
+      </div>
+      <nav class="nav-menu" id="nav-menu">
+        <a href="#dashboard" class="nav-item" data-lang-key="dashboard"><span class="icon">🏠</span> Asosiy ekran</a>
+        <a href="#purchases" class="nav-item" data-lang-key="purchases"><span class="icon">🛒</span> Xaridlar</a>
+        <a href="#add-purchase" class="nav-item" data-lang-key="add-purchase"><span class="icon">➕</span> Xarid qo‘shish</a>
+        <a href="#reports" class="nav-item" data-lang-key="reports"><span class="icon">📊</span> Hisobotlar</a>
+        <a href="#settings" class="nav-item" data-lang-key="settings"><span class="icon">⚙️</span> Sozlamalar</a>
+        <a href="#inventory" class="nav-item" data-lang-key="inventory"><span class="icon">📦</span> Inventarizatsiya</a>
+        <a href="#suppliers" class="nav-item" data-lang-key="suppliers"><span class="icon">👤</span> Yetkazib beruvchilar</a>
+        <a href="#analytics" class="nav-item" data-lang-key="analytics"><span class="icon">🔍</span> Analitika</a>
+        <a href="#notifications" class="nav-item" data-lang-key="notifications"><span class="icon">🔔</span> Bildirishnomalar</a>
+        <a href="#archive" class="nav-item" data-lang-key="archive"><span class="icon">📑</span> Arxiv</a>
+        <a href="#logout" class="nav-item" data-lang-key="logout"><span class="icon">🚪</span> Chiqish</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Login Page -->
+      <section id="login" class="page active">
+        <div class="login-background">
+          <div class="shark-animation"></div>
+        </div>
+        <div class="login-form">
+          <div class="logo">
+            <span class="logo-icon">P</span>
+            <div>
+              <h2>PROCUREEASE</h2>
+              <p data-lang-key="slogan">Precision in Every Purchase</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-lang-key="login-label">login</label>
+            <input type="text" id="login-input" placeholder="Login...">
+          </div>
+          <div class="form-group">
+            <label data-lang-key="password-label">parol</label>
+            <input type="password" id="password-input" placeholder="Parol...">
+          </div>
+          <div class="form-actions">
+            <button class="btn login-btn" onclick="login()" data-lang-key="login-btn">Kirish</button>
+            <button class="btn exit-btn" onclick="exit()" data-lang-key="exit-btn">Chiqish</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dashboard Page -->
+      <section id="dashboard" class="page">
+        <h1 class="page-title" data-lang-key="dashboard">Asosiy ekran</h1>
+        <div class="dashboard-cards">
+          <div class="card" data-lang-key="total-purchases-card">Jami xaridlar: <span id="total-purchases">3</span></div>
+          <div class="card" data-lang-key="total-amount-card">Jami summa: <span id="total-amount">$12,000</span></div>
+          <div class="card" data-lang-key="last-purchase-card">Oxirgi xarid: <span id="last-purchase">12.03.2024</span></div>
+          <div class="card" data-lang-key="active-suppliers-card">Faol yetkazib beruvchilar: <span id="active-suppliers">5</span></div>
+        </div>
+      </section>
+
+      <!-- Purchases Page -->
+      <section id="purchases" class="page">
+        <h1 class="page-title" data-lang-key="purchases">Xaridlar</h1>
+        <button class="btn add-btn" onclick="showPage('add-purchase')" data-lang-key="add-purchase">Xarid qo‘shish</button>
+        <input type="text" class="search-bar" id="search-input" placeholder="Qidirish..." oninput="searchPurchases()">
+        <table id="purchases-table">
+          <thead>
+            <tr>
+              <th data-lang-key="id">ID</th>
+              <th data-lang-key="product-name">Mahsulot nomi</th>
+              <th data-lang-key="category">Kategoriya</th>
+              <th data-lang-key="date">Sana</th>
+              <th data-lang-key="amount">Summa</th>
+              <th data-lang-key="status">Holat</th>
+            </tr>
+          </thead>
+          <tbody id="purchases-body">
+            <tr><td>1</td><td>Noutbuk</td><td>IT-oborudovanie</td><td>10.03.2024</td><td>$5000</td><td>Tayyor</td></tr>
+            <tr><td>2</td><td>Printer</td><td>Ofisnye prinadlezhnosti</td><td>11.03.2024</td><td>$4000</td><td>Kutilmoqda</td></tr>
+            <tr><td>3</td><td>Bumaga</td><td>Ofisnye prinadlezhnosti</td><td>12.03.2024</td><td>$3000</td><td>Tayyor</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Add Purchase Page -->
+      <section id="add-purchase" class="page">
+        <h1 class="page-title" data-lang-key="add-purchase">Xarid qo‘shish</h1>
+        <div class="form-group">
+          <label data-lang-key="product-name">Mahsulot nomi</label>
+          <input type="text" id="product-name" placeholder="Kiriting...">
+        </div>
+        <div class="form-group">
+          <label data-lang-key="category">Kategoriya</label>
+          <input type="text" id="category" placeholder="Kiriting...">
+        </div>
+        <div class="form-group">
+          <label data-lang-key="date">Sana</label>
+          <input type="date" id="date" value="2025-05-08">
+        </div>
+        <div class="form-group">
+          <label data-lang-key="amount">Summa</label>
+          <input type="number" id="amount" placeholder="$">
+        </div>
+        <div class="form-group">
+          <label data-lang-key="status">Holat</label>
+          <select id="status">
+            <option value="Tayyor" data-lang-key="status-ready">Tayyor</option>
+            <option value="Kutilmoqda" data-lang-key="status-pending">Kutilmoqda</option>
+            <option value="Bekor qilingan" data-lang-key="status-cancelled">Bekor qilingan</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button class="btn save-btn" onclick="addPurchase()" data-lang-key="save-btn">Saqlash</button>
+          <button class="btn cancel-btn" onclick="showPage('purchases')" data-lang-key="cancel-btn">Bekor qilish</button>
+        </div>
+      </section>
+
+      <!-- Reports Page -->
+      <section id="reports" class="page">
+        <h1 class="page-title" data-lang-key="reports">Hisobotlar</h1>
+        <div class="charts-container">
+          <div class="chart">
+            <h3 data-lang-key="monthly-expenses">Oylik xarajatlar</h3>
+            <canvas id="lineChart"></canvas>
+          </div>
+          <div class="chart">
+            <h3 data-lang-key="category-distribution">Kategoriya bo‘yicha taqsimot</h3>
+            <canvas id="pieChart"></canvas>
+          </div>
+        </div>
+        <div class="report-table">
+          <input type="text" class="search-bar" id="report-search" placeholder="Qidirish..." oninput="searchReports()">
+          <table id="reports-table">
+            <thead>
+              <tr>
+                <th data-lang-key="report">Hisobot</th>
+                <th data-lang-key="date">Sana</th>
+                <th data-lang-key="quantity">Miqdor</th>
+              </tr>
+            </thead>
+            <tbody id="reports-body">
+              <tr><td data-lang-key="purchases-report">Xaridlar hisoboti</td><td>2024-03-10</td><td>$5,000</td></tr>
+              <tr><td data-lang-key="category-report">Kategoriya taqsimoti</td><td>2024-04-24</td><td>10 ta</td></tr>
+              <tr><td data-lang-key="total-expenses-report">Jami xarajatlar</td><td>2024-05-01</td><td>$12,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Settings Page -->
+      <section id="settings" class="page">
+        <h1 class="page-title" data-lang-key="settings">Sozlamalar</h1>
+        <div class="form-group">
+          <label data-lang-key="username-label">Foydalanuvchi nomi</label>
+          <input type="text" id="settings-username">
+        </div>
+        <div class="form-group">
+          <label data-lang-key="role-label">Rol</label>
+          <select id="settings-role">
+            <option value="pokupatel" data-lang-key="role-buyer">Pokupatel</option>
+            <option value="administrator" data-lang-key="role-admin">Administrator</option>
+            <option value="manager" data-lang-key="role-manager">Manager</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label data-lang-key="language-label">Til</label>
+          <select id="language">
+            <option value="uz" data-lang-key="language-uz">O‘zbekcha</option>
+            <option value="ru" data-lang-key="language-ru">Русский</option>
+            <option value="en" data-lang-key="language-en">English</option>
+          </select>
+        </div>
+        <button class="btn save-btn" onclick="saveSettings()" data-lang-key="save-btn">Saqlash</button>
+      </section>
+
+      <!-- Inventory Page -->
+      <section id="inventory" class="page">
+        <h1 class="page-title" data-lang-key="inventory">Inventarizatsiya</h1>
+        <input type="text" class="search-bar" id="inventory-search" placeholder="Qidirish..." oninput="searchInventory()">
+        <table id="inventory-table">
+          <thead>
+            <tr>
+              <th data-lang-key="id">ID</th>
+              <th data-lang-key="product">Mahsulot</th>
+              <th data-lang-key="quantity">Miqdor</th>
+              <th data-lang-key="warehouse">Ombor</th>
+            </tr>
+          </thead>
+          <tbody id="inventory-body">
+            <tr><td>1</td><td>Noutbuk</td><td>10</td><td>Ombor A</td></tr>
+            <tr><td>2</td><td>Printer</td><td>5</td><td>Ombor B</td></tr>
+            <tr><td>3</td><td>Bumaga</td><td>100</td><td>Ombor A</td></tr>
+          </tbody>
+        </table>
+        <button class="btn add-btn" onclick="showPage('add-inventory')" data-lang-key="add-btn">Qo‘shish</button>
+      </section>
+
+      <!-- Add Inventory Page -->
+      <section id="add-inventory" class="page">
+        <h1 class="page-title" data-lang-key="add-inventory">Inventarizatsiyaga qo‘shish</h1>
+        <div class="form-group">
+          <label data-lang-key="product">Mahsulot</label>
+          <input type="text" id="inventory-product" placeholder="Kiriting...">
+        </div>
+        <div class="form-group">
+          <label data-lang-key="quantity">Miqdor</label>
+          <input type="number" id="inventory-quantity" placeholder="Kiriting...">
+        </div>
+        <div class="form-group">
+          <label data-lang-key="warehouse">Ombor</label>
+          <input type="text" id="inventory-warehouse" placeholder="Kiriting...">
+        </div>
+        <div class="form-actions">
+          <button class="btn save-btn" onclick="addInventory()" data-lang-key="save-btn">Saqlash</button>
+          <button class="btn cancel-btn" onclick="showPage('inventory')" data-lang-key="cancel-btn">Bekor qilish</button>
+        </div>
+      </section>
+
+      <!-- Suppliers Page -->
+      <section id="suppliers" class="page">
+        <h1 class="page-title" data-lang-key="suppliers">Yetkazib beruvchilar</h1>
+        <input type="text" class="search-bar" id="supplier-search" placeholder="Qidirish..." oninput="searchSuppliers()">
+        <table id="suppliers-table">
+          <thead>
+            <tr>
+              <th data-lang-key="id">ID</th>
+              <th data-lang-key="name">Ism</th>
+              <th data-lang-key="phone">Telefon</th>
+              <th data-lang-key="address">Manzil</th>
+            </tr>
+          </thead>
+          <tbody id="suppliers-body">
+            <tr><td>1</td><td>Alibaba Ltd</td><td>+998 90 123 45 67</td><td>Toshkent</td></tr>
+            <tr><td>2</td><td>TechCorp</td><td>+998 91 234 56 78</td><td>Samarqand</td></tr>
+          </tbody>
+        </table>
+        <button class="btn add-btn" onclick="showPage('add-supplier')" data-lang-key="add-btn">Qo‘shish</button>
+      </section>
+
+      <!-- Add Supplier Page -->
+      <section id="add-supplier" class="page">
+        <h1 class="page-title" data-lang-key="add-supplier">Yetkazib beruvchi qo‘shish</h1>
+        <div class="form-group">
+          <label data-lang-key="name">Ism</label>
+          <input type="text" id="supplier-name" placeholder="Kiriting...">
+        </div>
+        <div class="form-group">
+          <label data-lang-key="phone">Telefon</label>
+          <input type="text" id="supplier-phone" placeholder="Kiriting...">
+        </div>
+        <div class="form-group">
+          <label data-lang-key="address">Manzil</label>
+          <input type="text" id="supplier-address" placeholder="Kiriting...">
+        </div>
+        <div class="form-actions">
+          <button class="btn save-btn" onclick="addSupplier()" data-lang-key="save-btn">Saqlash</button>
+          <button class="btn cancel-btn" onclick="showPage('suppliers')" data-lang-key="cancel-btn">Bekor qilish</button>
+        </div>
+      </section>
+
+      <!-- Analytics Page -->
+      <section id="analytics" class="page">
+        <h1 class="page-title" data-lang-key="analytics">Analitika</h1>
+        <div class="charts-container">
+          <div class="chart">
+            <h3 data-lang-key="expense-trend">Xarajat tendensiyasi</h3>
+            <canvas id="trendChart"></canvas>
+          </div>
+          <div class="chart">
+            <h3 data-lang-key="supplier-efficiency">Yetkazib beruvchi samaradorligi</h3>
+            <canvas id="efficiencyChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notifications Page -->
+      <section id="notifications" class="page">
+        <h1 class="page-title" data-lang-key="notifications">Bildirishnomalar</h1>
+        <ul id="notifications-list" class="notifications-list">
+          <li data-lang-key="notification-1">Yangi xarid qo‘shildi: Noutbuk (10.03.2024)</li>
+          <li data-lang-key="notification-2">Yetkazib beruvchi: Alibaba Ltd, qo‘ng‘iroq kutilmoqda</li>
+          <li data-lang-key="notification-3">Ombor A: 50 dona bumaga qoldi</li>
+        </ul>
+      </section>
+
+      <!-- Archive Page -->
+      <section id="archive" class="page">
+        <h1 class="page-title" data-lang-key="archive">Arxiv</h1>
+        <input type="text" class="search-bar" id="archive-search" placeholder="Qidirish..." oninput="searchArchive()">
+        <table id="archive-table">
+          <thead>
+            <tr>
+              <th data-lang-key="id">ID</th>
+              <th data-lang-key="product">Mahsulot</th>
+              <th data-lang-key="date">Sana</th>
+              <th data-lang-key="amount">Summa</th>
+            </tr>
+          </thead>
+          <tbody id="archive-body">
+            <tr><td>1</td><td>Monitor</td><td>01.02.2024</td><td>$2000</td></tr>
+            <tr><td>2</td><td>Klaviatura</td><td>15.01.2024</td><td>$1500</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
